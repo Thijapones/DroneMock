@@ -52,30 +52,36 @@ function Getone()
 
 function Insert()
 {
-    var newdrone = 
-    {
-        nome : $("insertdronename").val(),
-        modelo : $("insertdronemodel").val(),
-        cor : $("insertdronecolor").val()
-    };
-
     $.ajax(
         {
-            url: path,
-            type: "GET",
+            url: 'https://webstoreapps.azurewebsites.net/api/drone/',
+            type: "POST",
+            dataType: "JSON",
+            contentType: "application/JSON",
+            headers:
+            {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application-json'
+            },
+            data: JSON.stringify
+            (
+                {
+                    "nome" : $("#insertdronename").val(),
+                    "modelo" : $("#insertdronemodel").val(),
+                    "cor" : $("#insertdronecolor").val()
+                }
+            ),
             success: function(data)
             {
-                    $('#drone-table').append
-                    (
-                        '<tr>'
-                            +'<th id="nome"><a class="link" href="#">'+data.nome+'</a></th>'
-                            +'<td id="modelo">'+data.modelo+'</td>'
-                            +'<td id="cor">'+data.cor+'</td>'
-                        +'</tr>'
-                    )
-                $(".table").show();
-            } 
+                console.log(data)
+                alert("OK");
+            },
+            else : function (data)
+            {
+                console.log(data)
+            }
+
     }) 
     
-    window.location.href = "Index.html";
+    //window.location.href = "Index.html";
 }
